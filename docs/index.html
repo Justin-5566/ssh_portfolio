@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My Portfolio - Blog</title>
+
     <style>
         * {
             margin: 0;
@@ -12,7 +13,8 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                "Helvetica Neue", Arial, sans-serif;
             line-height: 1.6;
             color: #333;
             background-color: #f5f5f5;
@@ -150,7 +152,6 @@
             padding: 0.25rem 0.75rem;
             border-radius: 4px;
             font-size: 0.85rem;
-            margin-left: auto;
         }
 
         footer {
@@ -185,15 +186,10 @@
                 flex-direction: column;
                 gap: 0.25rem;
             }
-
-            .category {
-                display: block;
-                margin-left: 0;
-                margin-top: 1rem;
-            }
         }
     </style>
 </head>
+
 <body>
     <header>
         <h1>My Portfolio</h1>
@@ -209,13 +205,91 @@
 
     <main>
         <section class="blog-posts">
-            
-                
-            {{else}}
-            <div class="no-posts">
-                <p>No blog posts available yet. Check back soon!</p>
-            </div>
-            {{/if}}
+
+            <!-- Blog Post 1 -->
+            <article class="post-card">
+                <a href="/blog/getting-started-with-javascript.html">
+                    <h2>Getting Started with JavaScript</h2>
+                </a>
+
+                <div class="post-meta">
+                    <span>📅 May 15, 2026</span>
+                    <span>⏱ 5 min read</span>
+                    <span class="category">JavaScript</span>
+                </div>
+
+                <div class="tags">
+                    <span class="tag">JavaScript</span>
+                    <span class="tag">Web Development</span>
+                    <span class="tag">Beginner</span>
+                </div>
+
+                <p class="post-excerpt">
+                    Learn the fundamentals of JavaScript and start building
+                    interactive websites with variables, functions, and DOM manipulation.
+                </p>
+
+                <a class="read-more" href="/blog/getting-started-with-javascript.html">
+                    Read More →
+                </a>
+            </article>
+
+            <!-- Blog Post 2 -->
+            <article class="post-card">
+                <a href="/blog/building-a-static-site-generator.html">
+                    <h2>Building a Static Site Generator</h2>
+                </a>
+
+                <div class="post-meta">
+                    <span>📅 May 10, 2026</span>
+                    <span>⏱ 8 min read</span>
+                    <span class="category">Projects</span>
+                </div>
+
+                <div class="tags">
+                    <span class="tag">Node.js</span>
+                    <span class="tag">SSG</span>
+                    <span class="tag">Automation</span>
+                </div>
+
+                <p class="post-excerpt">
+                    A deep dive into creating a custom static site generator
+                    using JavaScript, markdown parsing, and template rendering.
+                </p>
+
+                <a class="read-more" href="/blog/building-a-static-site-generator.html">
+                    Read More →
+                </a>
+            </article>
+
+            <!-- Blog Post 3 -->
+            <article class="post-card">
+                <a href="/blog/css-tips-and-tricks.html">
+                    <h2>CSS Tips and Tricks for Better UI</h2>
+                </a>
+
+                <div class="post-meta">
+                    <span>📅 May 5, 2026</span>
+                    <span>⏱ 6 min read</span>
+                    <span class="category">CSS</span>
+                </div>
+
+                <div class="tags">
+                    <span class="tag">CSS</span>
+                    <span class="tag">Design</span>
+                    <span class="tag">Frontend</span>
+                </div>
+
+                <p class="post-excerpt">
+                    Improve your website design with modern CSS techniques,
+                    responsive layouts, animations, and reusable utility classes.
+                </p>
+
+                <a class="read-more" href="/blog/css-tips-and-tricks.html">
+                    Read More →
+                </a>
+            </article>
+
         </section>
     </main>
 
