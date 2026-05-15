@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Static Site Generators - My Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+        }
+
+        nav {
+            background-color: #333;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 1.5rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #667eea;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        article {
+            background: white;
+            border-radius: 8px;
+            padding: 3rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        article h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .post-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.95rem;
+            color: #666;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #e9ecef;
+            flex-wrap: wrap;
+        }
+
+        .post-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .tag {
+            background-color: #e9ecef;
+            color: #495057;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .category {
+            display: inline-block;
+            background-color: #667eea;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        .content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #444;
+        }
+
+        .content h2 {
+            font-size: 1.8rem;
+            margin-top: 2rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .content h3 {
+            font-size: 1.4rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #444;
+        }
+
+        .content p {
+            margin-bottom: 1rem;
+        }
+
+        .content ul,
+        .content ol {
+            margin-bottom: 1rem;
+            margin-left: 2rem;
+        }
+
+        .content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .content code {
+            background-color: #f4f4f4;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #d63384;
+        }
+
+        .content pre {
+            background-color: #f4f4f4;
+            padding: 1rem;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin-bottom: 1rem;
+            border-left: 4px solid #667eea;
+        }
+
+        .content pre code {
+            color: #333;
+            padding: 0;
+            background-color: transparent;
+            border-radius: 0;
+        }
+
+        .content blockquote {
+            border-left: 4px solid #667eea;
+            padding-left: 1rem;
+            margin-left: 0;
+            margin-bottom: 1rem;
+            color: #666;
+            font-style: italic;
+        }
+
+        .content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1rem;
+        }
+
+        .content table th,
+        .content table td {
+            border: 1px solid #ddd;
+            padding: 0.75rem;
+            text-align: left;
+        }
+
+        .content table th {
+            background-color: #f9f9f9;
+            font-weight: 600;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 2rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 3rem;
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            article {
+                padding: 1.5rem;
+            }
+
+            article h1 {
+                font-size: 1.8rem;
+            }
+
+            .post-meta {
+                flex-direction: column;
+                gap: 0.25rem;
+            }
+
+            .content {
+                font-size: 1rem;
+            }
+
+            .content h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>My Portfolio</h1>
+    </header>
+
+    <nav>
+        <a href="/">Home</a>
+        <a href="/blog">Blog</a>
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+    </nav>
+
+    <main>
+        <article>
+            <h1>Understanding Static Site Generators</h1>
+
+            <div class="post-meta">
+                <span>📅 May 13, 2026</span>
+                <span>✍️ Portfolio Author</span>
+                
+                <span class="category">Web Development</span>
+                
+            </div>
+
+            
+            <div class="tags">
+                
+            </div>
+            
+
+            <div class="content">
+                <h1>Understanding Static Site Generators</h1>
+<p>Static Site Generators (SSGs) have become increasingly popular in recent years. Let&#39;s explore what they are and why developers love them.</p>
+<h2>What is a Static Site Generator?</h2>
+<p>A Static Site Generator is a tool that takes raw content (usually in markdown) and template files, and generates a complete static website ready for deployment.</p>
+<h3>Traditional vs SSG Approach</h3>
+<p><strong>Traditional Dynamic Website:</strong></p>
+<pre><code>User Request → Server → Database Query → Process → Return HTML
+</code></pre>
+<p><strong>Static Site Generator:</strong></p>
+<pre><code>Write Content → SSG Processes → Generate HTML (once) → Deploy → Serve Static Files
+</code></pre>
+<h2>Key Benefits</h2>
+<h3>1. Performance ⚡</h3>
+<p>Static files are the fastest way to serve web content. No server processing means instant page loads.</p>
+<ul>
+<li>No database queries</li>
+<li>No server-side rendering</li>
+<li>Pure HTTP caching</li>
+<li>CDN-friendly</li>
+</ul>
+<h3>2. Security 🔒</h3>
+<p>Fewer moving parts means fewer vulnerabilities:</p>
+<ul>
+<li>No server code to exploit</li>
+<li>No database to compromise</li>
+<li>No dynamic processes to attack</li>
+<li>Just static files and assets</li>
+</ul>
+<h3>3. Simplicity 🎯</h3>
+<p>Managing an SSG-based site is straightforward:</p>
+<pre><code class="language-bash"># Add content
+echo &quot;New post&quot; &gt; content/blog/new-post.md
+
+# Generate site
+npm run build
+
+# Deploy
+git push
+</code></pre>
+<h3>4. Version Control 📚</h3>
+<p>Your entire site, including content, is in version control:</p>
+<ul>
+<li>Track all changes</li>
+<li>Easy rollbacks</li>
+<li>Collaboration made simple</li>
+<li>Full audit trail</li>
+</ul>
+<h3>5. Cost Effectiveness 💰</h3>
+<p>Hosting static sites is cheap:</p>
+<ul>
+<li>GitHub Pages (free)</li>
+<li>Netlify (free tier)</li>
+<li>Vercel (free tier)</li>
+<li>Any static file host</li>
+</ul>
+<h2>Popular SSGs</h2>
+<table>
+<thead>
+<tr>
+<th>Generator</th>
+<th>Language</th>
+<th>Best For</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Hugo</td>
+<td>Go</td>
+<td>Speed, large sites</td>
+</tr>
+<tr>
+<td>Jekyll</td>
+<td>Ruby</td>
+<td>GitHub Pages integration</td>
+</tr>
+<tr>
+<td>Gatsby</td>
+<td>JavaScript/React</td>
+<td>Complex, dynamic content</td>
+</tr>
+<tr>
+<td>11ty</td>
+<td>JavaScript</td>
+<td>Flexibility, templates</td>
+</tr>
+<tr>
+<td>Next.js</td>
+<td>JavaScript/React</td>
+<td>Full-stack static generation</td>
+</tr>
+<tr>
+<td>Custom SSG</td>
+<td>Any</td>
+<td>Learning, specific needs</td>
+</tr>
+</tbody></table>
+<h2>When to Use an SSG</h2>
+<p>SSGs are perfect for:</p>
+<ul>
+<li>Blogs and portfolios</li>
+<li>Documentation sites</li>
+<li>Marketing websites</li>
+<li>Portfolios and resumes</li>
+<li>Knowledgebases</li>
+<li>Any content-heavy, low-update-frequency site</li>
+</ul>
+<p>SSGs might not be ideal for:</p>
+<ul>
+<li>Real-time applications</li>
+<li>Large, frequently-changing datasets</li>
+<li>Sites requiring user-specific content</li>
+<li>Complex server-side logic</li>
+</ul>
+<h2>Building Your Own SSG</h2>
+<p>You don&#39;t need to use an existing SSG. Building your own has advantages:</p>
+<ol>
+<li><strong>Learning</strong> - Deep understanding of how websites are generated</li>
+<li><strong>Control</strong> - Customize exactly how you want</li>
+<li><strong>Simplicity</strong> - No bloated features you don&#39;t need</li>
+<li><strong>Flexibility</strong> - Adapt it to your specific needs</li>
+</ol>
+<p>That&#39;s what we&#39;ve done with this site! Our custom JavaScript-based SSG gives us full control and understanding of our build process.</p>
+<h2>Conclusion</h2>
+<p>Static Site Generators strike a balance between simplicity and power. They&#39;re perfect for content-focused sites and offer excellent performance, security, and maintainability.</p>
+<p>Whether you use an existing SSG or build your own, the benefits are clear. If you&#39;re looking to start a blog or portfolio, an SSG is an excellent choice.</p>
+
+            </div>
+
+            <a href="/" class="back-link">← Back to Blog</a>
+        </article>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 My Portfolio. All rights reserved.</p>
+        <p>Built with a custom JavaScript Static Site Generator</p>
+    </footer>
+</body>
+</html>
