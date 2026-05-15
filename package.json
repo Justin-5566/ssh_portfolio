@@ -1,0 +1,33 @@
+{
+  "name": "ssg-portfolio",
+  "version": "1.0.0",
+  "description": "Custom Static Site Generator for portfolio and blog",
+  "main": "src/build.js",
+  "scripts": {
+    "build": "node src/build.js",
+    "dev": "node src/cli.js --watch",
+    "test": "jest",
+    "lint": "eslint src/",
+    "serve": "http-server docs/ -p 8080"
+  },
+  "keywords": [
+    "ssg",
+    "static-site-generator",
+    "blog",
+    "markdown",
+    "portfolio"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "gray-matter": "^4.0.3",
+    "marked": "^9.1.6"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.0",
+    "eslint": "^8.42.0",
+    "jest": "^29.5.0",
+    "prettier": "^2.8.8",
+    "http-server": "^14.1.1"
+  }
+}

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{site_title}} - Blog</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 1rem;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        nav {
+            background-color: #333;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 1.5rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #667eea;
+        }
+
+        main {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .blog-posts {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        .post-card {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .post-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .post-card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: #667eea;
+        }
+
+        .post-card a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .post-card a:hover h2 {
+            text-decoration: underline;
+        }
+
+        .post-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .post-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .tag {
+            background-color: #e9ecef;
+            color: #495057;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .post-excerpt {
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .read-more {
+            display: inline-block;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .read-more:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+
+        .category {
+            display: inline-block;
+            background-color: #667eea;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            margin-left: auto;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 3rem;
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+        }
+
+        .no-posts {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            nav a {
+                margin: 0 0.75rem;
+                font-size: 0.95rem;
+            }
+
+            .post-meta {
+                flex-direction: column;
+                gap: 0.25rem;
+            }
+
+            .category {
+                display: block;
+                margin-left: 0;
+                margin-top: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>{{site_title}}</h1>
+        <p>{{site_description}}</p>
+    </header>
+
+    <nav>
+        <a href="/">Home</a>
+        <a href="/blog">Blog</a>
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+    </nav>
+
+    <main>
+        <section class="blog-posts">
+            {{#if posts}}
+                {{#each posts}}
+                <article class="post-card">
+                    <a href="{{url}}">
+                        <h2>{{title}}</h2>
+                    </a>
+                    <div class="post-meta">
+                        <span>📅 {{date}}</span>
+                        <span>✍️ {{author}}</span>
+                        {{#if category}}
+                        <span class="category">{{category}}</span>
+                        {{/if}}
+                    </div>
+                    {{#if tags}}
+                    <div class="tags">
+                        {{#each tags}}
+                        <span class="tag">{{this}}</span>
+                        {{/each}}
+                    </div>
+                    {{/if}}
+                    <p class="post-excerpt">{{excerpt}}</p>
+                    <a href="{{url}}" class="read-more">Read More →</a>
+                </article>
+                {{/each}}
+            {{else}}
+            <div class="no-posts">
+                <p>No blog posts available yet. Check back soon!</p>
+            </div>
+            {{/if}}
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; {{year}} {{site_title}}. All rights reserved.</p>
+        <p>Built with a custom JavaScript Static Site Generator</p>
+    </footer>
+</body>
+</html>
